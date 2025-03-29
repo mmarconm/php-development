@@ -1,9 +1,9 @@
 services:
   codephp:
-    image: codephp:8.3
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
+    # image: coderphp:8.2
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 8000:80
     restart: unless-stopped
