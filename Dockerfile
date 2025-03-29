@@ -53,16 +53,16 @@ RUN curl -sS https://getcomposer.org/installer -o composer-setup.php && \
 # Se necessário, instale extensões do PHP aqui (opcional)
 # RUN apt-get update && apt-get install -y --no-install-recommends ... && docker-php-ext-install ...
 
-# Imagem final de produção
-FROM php:8.2-apache
+# # Imagem final de produção
+# FROM php:8.2-apache
 
-# Copia os artefatos construídos na etapa anterior
-COPY --from=builder /usr/local/bin/composer /usr/local/bin/composer
-COPY --from=builder /etc/sudoers.d/coder /etc/sudoers.d/coder
-COPY --from=builder /home/coder /home/coder
+# # Copia os artefatos construídos na etapa anterior
+# COPY --from=builder /usr/local/bin/composer /usr/local/bin/composer
+# COPY --from=builder /etc/sudoers.d/coder /etc/sudoers.d/coder
+# COPY --from=builder /home/coder /home/coder
 
 USER coder
-WORKDIR /home/coder
+WORKDIR /home/coder/app
 EXPOSE 8000
 
 # docker build --no-cache -t coderphp:8.2 -f Dockerfile .

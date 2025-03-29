@@ -4,7 +4,7 @@
 		"../docker-compose.yml"
 	],
 	"service": "codephp",
-	"workspaceFolder": "/home/coder",
+	"workspaceFolder": "/home/coder/app",
 	"customizations": {
 		"vscode": {
 			"extensions": [
