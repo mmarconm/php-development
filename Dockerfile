@@ -36,6 +36,8 @@ ARG USER_GID=${USER_UID}
 RUN groupadd --gid ${USER_GID} ${USERNAME} && \
     useradd --uid ${USER_UID} --gid ${USER_GID} --shell /bin/bash --create-home ${USERNAME} && \
     echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} && \
+    mkdir -p /home/${USERNAME}/.composer/cache && \
+    chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.composer && \
     chmod 0440 /etc/sudoers.d/${USERNAME}
 
 # Instalação do Composer
