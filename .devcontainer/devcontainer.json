@@ -1,0 +1,17 @@
+{
+	"name": "CodePHP",
+	"dockerComposeFile": [
+		"../docker-compose.yml"
+	],
+	"service": "codephp",
+	"workspaceFolder": "/home/coder",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"zobo.php-intellisense",
+				"laravel.vscode-laravel"
+			]
+		}
+	}
+
+}

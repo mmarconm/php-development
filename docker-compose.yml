@@ -1,0 +1,28 @@
+services:
+  codephp:
+    image: codephp:8.3
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    ports:
+      - 8000:80
+    restart: unless-stopped
+
+  db:
+    image: docker.io/library/mariadb:10.11
+    environment:
+      - MYSQL_ROOT_PASSWORD=adminadmin
+      - MYSQL_DATABASE=codephp
+      - MYSQL_USER=codephp
+      - MYSQL_PASSWORD=adminadmin
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=codephp
+      - PMA_PASSWORD=adminadmin
+    ports:
+      - 8080:80
+    restart: unless-stopped
