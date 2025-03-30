@@ -34,11 +34,12 @@ Este projeto é configurado para ser utilizado com o [DevContainer](https://code
 
 4. **Serviços Auxiliares:**
 
-   - **Banco de Dados:** Serviço `db` (MariaDB) está configurado com as credenciais:
+   - **Banco de Dados:** Serviço `db` (postgres) está configurado com as credenciais:
      - Usuário: `codephp`
      - Senha: `adminadmin`
      - Banco: `codephp`
-   - **Adminer:** Acesse [Adminer](http://localhost:8080) para gerenciar o banco de dados.
+   - **Adminer:** Acesse [pgadmin4](http://localhost:8080) para gerenciar o banco de dados.
+   - caso precise de outro banco de dados como mariadb (mysql) apenas modifique o docker-compose.yml para o banco e gerenciador que melhor lhe atenda.
 
 5. **Comandos Úteis:**
 

@@ -9,26 +9,72 @@ services:
     restart: unless-stopped
 
   db:
-    image: docker.io/library/mariadb:10.11
+    image: postgres:15
     environment:
-      - MYSQL_ROOT_PASSWORD=adminadmin
-      - MYSQL_DATABASE=codephp
-      - MYSQL_USER=codephp
-      - MYSQL_PASSWORD=adminadmin
+      - POSTGRES_USER=coder
+      - POSTGRES_PASSWORD=adminadmin
+      - POSTGRES_DB=coder
     restart: unless-stopped
-
-  adminer:
-    image: adminer
     ports:
-      - 8080:8080
-    restart: unless-stopped
+      - 5432:5432
+    depends_on:
+      - codephp
+    # volumes:
+    #   - db_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
     environment:
-      - ADMINER_DEFAULT_SERVER=db
-      - ADMINER_USERNAME=codephp
-      - ADMINER_PASSWORD=adminadmin
+      - PGADMIN_DEFAULT_PASSWORD=adminadmin
+      - PGADMIN_DEFAULT_EMAIL=coder@coder.home
+      - POSTGRES_USER=coder
+    ports:
+      - 8080:80
     depends_on:
       - db
-      
+
+  stack:
+    image: redis/redis-stack:latest
+    ports:
+      - 6379:6379
+      - 8001:8001
+    restart: unless-stopped
+    environment:
+      # - REDIS_PASSWORD=adminadmin
+      - REGIS_ARGS=--requirepass adminadmin
+    depends_on:
+      - codephp
+
+  # redis:
+  #   image: docker.io/redis
+  #   ports:
+  #     - 6379:6379
+  #   restart: unless-stopped
+  #   command: redis-server --requirepass adminadmin
+  #   # volumes:
+  #   #   - ./redis.conf:/usr/local/etc/redis/redis.conf
+
+  # db:
+  #   image: docker.io/library/mariadb:10.11
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=adminadmin
+  #     - MYSQL_DATABASE=codephp
+  #     - MYSQL_USER=codephp
+  #     - MYSQL_PASSWORD=adminadmin
+  #   restart: unless-stopped
+
+  # adminer:
+  #   image: adminer
+  #   ports:
+  #     - 8080:8080
+  #   restart: unless-stopped
+  #   environment:
+  #     - ADMINER_DEFAULT_SERVER=db
+  #     - ADMINER_USERNAME=codephp
+  #     - ADMINER_PASSWORD=adminadmin
+  #   depends_on:
+  #     - db
+
   # phpmyadmin:
   #   image: phpmyadmin/phpmyadmin
   #   environment:
@@ -39,4 +85,7 @@ services:
   #     - 8081:80
   #   restart: unless-stopped
 
-
+# volumes:
+#     odoo_data:
+#     db_data:
+#     db_socket:
