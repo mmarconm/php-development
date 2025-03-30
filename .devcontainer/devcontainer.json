@@ -8,8 +8,13 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"zobo.php-intellisense",
-				"laravel.vscode-laravel"
+				"bradlc.vscode-tailwindcss",
+				"MehediDracula.php-namespace-resolver",
+				"onecentlin.laravel-blade",
+				"onecentlin.laravel-extension-pack",
+				"vincaslt.highlight-matching-tag",
+				"xdebug.php-debug",
+				"zobo.php-intellisense"
 			]
 		}
 	}
