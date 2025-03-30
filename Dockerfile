@@ -35,28 +35,28 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 ARG USERNAME=coder
 ARG USER_UID=1001
 ARG USER_GID=${USER_UID}
-RUN groupadd --gid ${USER_GID} ${USERNAME} && \
-    useradd --uid ${USER_UID} --gid ${USER_GID} --shell /bin/bash --create-home ${USERNAME} && \
-    echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} && \
-    mkdir -p /home/${USERNAME}/.composer/cache && \
-    chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.composer && \
-    chmod 0440 /etc/sudoers.d/${USERNAME}
+RUN groupadd --gid ${USER_GID} ${USERNAME} \
+    && useradd --uid ${USER_UID} --gid ${USER_GID} --shell /bin/bash --create-home ${USERNAME} \
+    && echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME}\
+    && mkdir -p /home/${USERNAME}/.composer/cache \
+    && chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.composer \
+    && chmod 0440 /etc/sudoers.d/${USERNAME}
 
 # Instalação do Composer
-RUN curl -sS https://getcomposer.org/installer -o composer-setup.php && \
-    EXPECTED_SIGNATURE=$(curl -sS https://composer.github.io/installer.sig) && \
-    ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');") && \
-    if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then \
+RUN curl -sS https://getcomposer.org/installer -o composer-setup.php \
+    && EXPECTED_SIGNATURE=$(curl -sS https://composer.github.io/installer.sig) \
+    && ACTUAL_SIGNATURE=$(php -r "echo hash_file('sha384', 'composer-setup.php');") \
+    && if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then \
       echo "ERROR: Invalid installer signature"; \
       rm composer-setup.php; \
       exit 1; \
-    fi && \
-    php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
-    rm composer-setup.php
+    fi \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && rm composer-setup.php
 
 # Se necessário, instale extensões do PHP aqui (opcional)
 # RUN apt-get update && apt-get install -y --no-install-recommends ... && docker-php-ext-install ...
-RUN docker-php-ext-install mysqli pdo_mysql pdo_pgsql
+RUN docker-php-ext-install mysqli pdo_mysql pdo_pgsql pcntl
 
 USER coder
 WORKDIR /home/coder/app

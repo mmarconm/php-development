@@ -52,7 +52,10 @@ Este projeto é configurado para ser utilizado com o [DevContainer](https://code
      - composer create-project laravel/laravel my-app
      ```
 
-## Notas Finais
+## Observações e considerações finais
+Ainda não sou especialista em PHP/Laravel; estou estudando há pouco tempo. Com o objetivo de padronizar meu ambiente de desenvolvimento tanto no Windows quanto no Linux, e para evitar depender da instalação do XAMPP, criei um ambiente simplificado para facilitar meus projetos com Laravel.
+
+Reconheço que há bastante espaço para melhorias neste ambiente. Pretendo aperfeiçoá-lo gradualmente, à medida que adquirir mais experiência e conhecimento na ferramenta.
 
 Este ambiente DevContainer visa simplificar o processo de configuração e garantir um ambiente consistente para todos os desenvolvedores. Caso precise de alterações, ajuste os arquivos [Dockerfile](Dockerfile), [docker-compose.yml](docker-compose.yml) ou [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json).
 
