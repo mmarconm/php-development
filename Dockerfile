@@ -11,10 +11,10 @@ ENV COMPOSER_CACHE_DIR=/home/coder/.composer/cache
 ENV COMPOSER_NO_INTERACTION=1
 
 # Instalação de dependências em uma única camada
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-    echo $TZ > /etc/timezone && \
-    apt-get update && apt upgrade -y && \
-    apt-get install -y --no-install-recommends \
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone \
+    && apt-get update && apt upgrade -y \
+    && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
     locales \
@@ -25,9 +25,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     nodejs \
     npm \
     openssh-client \
-    sudo && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    sudo \
+    libzip-dev \
+    libpq-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Criação do usuário
 ARG USERNAME=coder
@@ -54,14 +56,7 @@ RUN curl -sS https://getcomposer.org/installer -o composer-setup.php && \
 
 # Se necessário, instale extensões do PHP aqui (opcional)
 # RUN apt-get update && apt-get install -y --no-install-recommends ... && docker-php-ext-install ...
-
-# # Imagem final de produção
-# FROM php:8.2-apache
-
-# # Copia os artefatos construídos na etapa anterior
-# COPY --from=builder /usr/local/bin/composer /usr/local/bin/composer
-# COPY --from=builder /etc/sudoers.d/coder /etc/sudoers.d/coder
-# COPY --from=builder /home/coder /home/coder
+RUN docker-php-ext-install mysqli pdo_mysql pdo_pgsql
 
 USER coder
 WORKDIR /home/coder/app

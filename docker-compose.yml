@@ -17,12 +17,26 @@ services:
       - MYSQL_PASSWORD=adminadmin
     restart: unless-stopped
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    environment:
-      - PMA_HOST=db
-      - PMA_USER=codephp
-      - PMA_PASSWORD=adminadmin
+  adminer:
+    image: adminer
     ports:
-      - 8080:80
+      - 8080:8080
     restart: unless-stopped
+    environment:
+      - ADMINER_DEFAULT_SERVER=db
+      - ADMINER_USERNAME=codephp
+      - ADMINER_PASSWORD=adminadmin
+    depends_on:
+      - db
+      
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   environment:
+  #     - PMA_HOST=db
+  #     - PMA_USER=codephp
+  #     - PMA_PASSWORD=adminadmin
+  #   ports:
+  #     - 8081:80
+  #   restart: unless-stopped
+
+
