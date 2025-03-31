@@ -45,13 +45,19 @@ Este projeto é configurado para ser utilizado com o [DevContainer](https://code
 
    - Para rebuildar o container, abra o comando **Remote-Containers: Rebuild Container** na paleta de comandos.
    - Para visualizar logs do docker-compose, use o terminal integrado e execute:
-     ```sh
+   ```sh
      docker-compose logs -f
-
+   ```
+   ```sh
      # Exemplos de como desenvolver com laravel
-     - composer require laravel/laravel
+     - composer require laravel/laravel # https://laravel.com/docs/12.x/installation
      - composer create-project laravel/laravel my-app
-     ```
+
+     # desenvolvimento com breeze
+     - cd my-app
+     - composer require laravel/breeze --dev # https://laravel.com/docs/12.x/starter-kits
+     - php artisan breeze:install 
+   ```
 
 ## Observações e considerações finais
 Ainda não sou especialista em PHP/Laravel; estou estudando há pouco tempo. Com o objetivo de padronizar meu ambiente de desenvolvimento tanto no Windows quanto no Linux, e para evitar depender da instalação do XAMPP, criei um ambiente simplificado para facilitar meus projetos com Laravel.
