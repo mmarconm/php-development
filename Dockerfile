@@ -23,6 +23,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     unzip \
     git \
     nodejs \
+    sqlite3 \
     npm \
     openssh-client \
     sudo \
@@ -59,7 +60,14 @@ RUN curl -sS https://getcomposer.org/installer -o composer-setup.php && \
 RUN docker-php-ext-install mysqli pdo_mysql pdo_pgsql pcntl
 
 USER coder
+
+RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" \
+    # && echo "source ~/.bashrc" >> ~/.bash_profile \
+    && sed -i 's/OSH_THEME=".*"/OSH_THEME="zork"/' ~/.bashrc \
+    && sed -i '$ s/^/#/' ~/.bashrc
+
 WORKDIR /home/coder/app
+
 EXPOSE 8000
 
 # docker build --no-cache -t coderphp:8.2 -f Dockerfile .
